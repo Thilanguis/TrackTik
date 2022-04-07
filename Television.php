@@ -1,18 +1,20 @@
+
 <?php
 
-include 'ElectronicItems.php';
+include_once 'ElectronicItem.php';
+class Television extends ElectronicItem {
 
-class Television extends ElectronicItems{
-
-    public function __construct(){ 
-  
+    public function __construct($price, $wired){
+        $this->price = $price;
+        $this->wired = $wired;
     }
 
-    public function maxExtras(){
+    public function maxExtras() {
         return PHP_INT_MAX;
     }
-
 }
 
-$television = new Television();
-echo $television->maxExtras();
+$a = new Television(0, true);
+echo $a->maxExtras();
+
+?>

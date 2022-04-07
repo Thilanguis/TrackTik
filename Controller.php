@@ -1,10 +1,19 @@
+
 <?php
 
-include 'ElectronicItems.php';
+include_once 'ElectronicItem.php';
+class Controller extends ElectronicItem {
 
-class Controller extends ElectronicItems{
-
-    public function __construct(){ 
-
+    public function __construct($price, $wired){
+        $this->price = $price;
+        $this->wired = $wired;
     }
+
+    public function maxExtras() {
+        return 0;
+    }
+
+
 }
+
+?>

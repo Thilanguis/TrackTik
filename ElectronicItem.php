@@ -1,26 +1,53 @@
 <?php
- 
-//  require 'ElectronicItem.php';
 
-//  class ElectronicItem {
+include_once 'ElectronicItems.php';
 
-//     public $price;
-//     public $wired;
-//     public $extra;
+abstract class ElectronicItem {
 
-//     public function addExtra($item){
-//         if($this->extra->getSize() < $this->maxExtras()) {
-//             $this->extra->addItem($item);
-//         }
-//     }
-      
-//     public function maxExtras() {
-//        return 0;
-//     }
-    
+    protected $price;
+    protected $wired;
+    protected $extras;
 
-//     public function getPrice() { return $this->price; } 
-//     public function getWired() { return $this->wired; } 
-//     public function setPrice($price) { $this->price = $price; } 
-//     public function setWired($wired) { $this->wired = $wired; }
-// }
+    protected abstract function maxExtras();
+
+    public function addExtra($extra) {
+        if($this->extras == null) {
+            $this->extras = array();
+        }
+
+        $size = count($this->extras);
+        if($size < $this->maxExtras()) {
+            array_push($this->extras, $extra); 
+        }
+    }
+
+    public function getExtras() {
+        return $this->extras;
+    }
+
+    public function getTotalPrice() {
+        $total = $this->price;
+
+        if($this->extras != null) {
+            $items = $this->extras->getItems();
+            foreach ($items as $item) {
+                $total += $item->getPrice();
+            }
+        }
+        return $total;
+    }
+
+    public function getSortedExtras() {
+        if($this->extras != null) {
+            return $this->extras->getSortedItems();
+        }
+        return null;
+    }
+
+    public function getPrice() { return $this->price; } 
+    public function getWired() { return $this->wired; } 
+    public function setPrice($price) { $this->price = $price; } 
+    public function setWired($wired) { $this->wired = $wired; }
+}
+
+?>

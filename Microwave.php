@@ -1,10 +1,17 @@
+
 <?php
 
-include 'ElectronicItems.php';
+class Microwave extends ElectronicItem {
 
-class Microwave extends ElectronicItems{
-
-    public function __construct(){ 
-        
+    public function __construct($price, $wired){
+        $this->price = $price;
+        $this->wired = $wired;
     }
+
+    public function maxExtras() {
+        return 0;
+    }
+
 }
+
+?>

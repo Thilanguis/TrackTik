@@ -1,94 +1,69 @@
 <?php
 
-include 'Controller.php';
-include 'ElectronicItems.php';
-include 'Console.php';
-include 'Television.php';
-include 'Microwave.php';
+include_once 'ElectronicItem.php';
+include_once 'Television.php';
+include_once 'Console.php';
+include_once 'Microwave.php';
+include_once 'Controller.php';
 
-ini_set('memory_limit', '44M');
+class Output {
 
-// class Output {
-
-//     public function teste() {
-//         return "Teste";
-//     }
-
-// }
-
-// $teste = new Output();
-// echo $teste->teste();
-
-class Output{
-
-    public function teste() {
-        return "Teste";
-    }
- 
     public function scenario1() {
+        $wiredController1 = new Controller(9.15, true);
+        $wiredController2 = new Controller(9.15, true);
 
-        $console = $this->getConsole();
-        $telesivion1 = $this->getTelevision1();
-        $telesivion2 = $this->getTelevision2();
-        $microwave = new Microwave();
+        $remoteController1 = new Controller(11.89, false);
+        $remoteController2 = new Controller(11.89, false);
 
-        $shops = new ElectronicItems(array($console, $telesivion1, $telesivion2, $microwave));
 
-        return $shops;
+        $console = new Console(89.61, true);
+        $console->addExtra($wiredController1);
+        $console->addExtra($wiredController2);
+        $console->addExtra($remoteController1);
+        $console->addExtra($remoteController2);
+
+
+        $television1 = new Television(289.55, true);
+        $television1->addExtra($remoteController1);
+        $television1->addExtra($remoteController2);
+
+        $television2 = new Television(320.45, true);
+        $television2->addExtra($wiredController1);
+
+        $microwave = new Microwave(58.25, true);
+
+        $prices = array(
+            $console->getPrice(), 
+            $television1->getPrice(), 
+            $television2->getPrice(), 
+            $microwave->getPrice()
+        );
+
+        $totalPrices = array(
+            $console->getTotalPrice(), 
+            $television1->getTotalPrice(), 
+            $television2->getTotalPrice(), 
+            $microwave->getTotalPrice()
+        );
+
+        $join = array_merge($prices, $totalPrices);
+        array_multisort($join, SORT_ASC, SORT_NUMERIC);
+        // var_dump($console->getSortedExtras());
+        // var_dump($join);
+
+        echo 'TOTAL CONSOLE : '.$console->getTotalPrice();
+
+        // $total = array_sum($values);
+
+        // echo 'TOTAL : '.$total;
 
     }
 
-    private function getConsole() {
-        $consoleControllerWired1 = new Controller();
-        $consoleControllerWired1->setWired(true);
-        $consoleControllerWired2 = new Controller();
-        $consoleControllerWired2->setWired(true);
-
-        $consoleControllerNoWired1 = new Controller();
-        $consoleControllerNoWired1->setWired(false);
-        $consoleControllerNoWired2 = new Controller();
-        $consoleControllerNoWired2->setWired(false);
-
-        $console = new Console();
-        $console->addExtra($consoleControllerWired1);
-        $console->addExtra($consoleControllerWired2);
-        $console->addExtra($consoleControllerNoWired1);
-        $console->addExtra($consoleControllerNoWired2);
-
-        return $console;
-    }
-
-    private function getTelevision1() {
-        $consoleControllerNoWired1 = new Controller();
-        $consoleControllerNoWired1->setWired(false);
-        $consoleControllerNoWired2 = new Controller();
-        $consoleControllerNoWired2->setWired(false);
-
-        $telesivion = new Television();
-        $telesivion->setPrice(220.99);
-        $telesivion->addExtra($consoleControllerNoWired1);
-        $telesivion->addExtra($consoleControllerNoWired2);
-
-        return $telesivion;
-
-    }
-
-    private function getTelevision2() {
-        $consoleControllerNoWired1 = new Controller();
-        $consoleControllerNoWired1->setWired(false);
-
-        $telesivion = new Television();
-        $telesivion->setPrice(220.99);
-        $telesivion->addExtra($consoleControllerNoWired1);
-
-        return $telesivion;
-    }
 }
 
+
+
 $teste = new Output();
-echo $teste->teste();
-echo $teste->scenario1();
-print_r($teste);
-// echo $teste->getConsole();
+var_dump($teste->scenario1());
 
 ?>

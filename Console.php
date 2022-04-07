@@ -1,15 +1,16 @@
+
 <?php
 
-include 'ElectronicItems.php';
+class Console extends ElectronicItem {
 
-class Console extends ElectronicItems {
-
-    public function __construct(){
-
+    public function __construct($price, $wired){
+        $this->price = $price;
+        $this->wired = $wired;
     }
 
     public function maxExtras() {
         return 4;
-     }
+    }
 }
 
+?>
