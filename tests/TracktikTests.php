@@ -11,7 +11,9 @@ include_once dirname(__DIR__).'\Microwave.php';
 include_once dirname(__DIR__).'\Console.php';
 include_once dirname(__DIR__).'\Television.php';
 include_once dirname(__DIR__).'\ElectronicItems.php';
-
+/**
+ * Use this command in terminal to run the tests: ./vendor/bin/phpunit
+ */
 class TracktikTests extends TestCase {
 
     /**
